@@ -1,21 +1,20 @@
 // 1
 
+const val kotlin = "1.3.72"
+
 object Versions {
-  
-  // Kotlin
-  const val kotlin = "1.3.21"
   
   // Build Config
   const val minSDK = 16
   const val devSDK = 21
-  const val compileSDK = 28
-  const val targetSDK = 28
+  const val compileSDK = 29
+  const val targetSDK = 29
   
   // Gradle Plugins
   const val fabric = "1.27.1"
   const val googleServicesGms = "4.2.0"
   
-  const val buildTools = "28.0.3"
+  const val buildTools = "29.0.3"
   
   // Google Play APIs
   const val playServices = "15.0.1"
@@ -108,7 +107,7 @@ object Versions {
 }
 
 // 3
-object Libs {
+public object Libs {
   
   const val v4 = "support-v4"
   const val v7 = "support-v7"
@@ -129,11 +128,11 @@ object Libs {
   private const val canary = "com.squareup.leakcanary:leakcanary"
   private const val junitOrg = "org.junit"
   
-  // Kotlin jdk8
-  const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
-  const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-  const val kotlinx = "org.jetbrains.kotlin:kotlin-android-extensions:${Versions.kotlin}"
-  const val kotlinPluginApi = "org.jetbrains.kotlin:kotlin-gradle-plugin-api:${Versions.kotlin}"
+  // Kotlin JDK
+  const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib:${kotlin}"
+  const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin}"
+  const val kotlinx = "org.jetbrains.kotlin:kotlin-android-extensions:${kotlin}"
+  const val kotlinPluginApi = "org.jetbrains.kotlin:kotlin-gradle-plugin-api:${kotlin}"
   // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-gradle-plugin-api
   
   const val gmsGradlePlugin = "com.google.gms:google-services:${Versions.googleServicesGms}"
