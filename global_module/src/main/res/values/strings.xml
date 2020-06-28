@@ -1,3 +1,13 @@
 <resources >
   <string name="app_name" >global</string >
+  <string name="search" >Search</string >
+  <string name="my_cities" >My Cities</string >
+  <string name="add_city" >Add City</string >
+  <string name="remove_city" >Remove City</string >
+  <string name="details" >Details</string >
+  <string name="search_cities" >Search Cities</string >
+  <string name="searching" >Searching…</string >
+  <string name="unable_to_fetch_cities" >Unable to fetch relevant cities! Please check your query or try again in some time</string >
+  <string name="unable_to_fetch_location" >Unable to fetch your current location! Please try again in some time</string >
+  <string name="unable_to_fet_latest_data" >Unable to fetch latest data from server. Please try again in some time</string >
 </resources >
