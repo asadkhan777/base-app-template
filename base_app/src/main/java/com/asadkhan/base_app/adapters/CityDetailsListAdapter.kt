@@ -5,54 +5,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.asadkhan.base_app.CityDetailsPageShort
-import com.asadkhan.base_app.Navigator
 import com.asadkhan.base_app.R
 import com.asadkhan.global.base.BaseViewHolder
-import com.asadkhan.global.domain.city.view.CityItemViewData
-import kotlinx.android.synthetic.main.view_holder_city_search_result.view.tv_city_country_search_result
-import kotlinx.android.synthetic.main.view_holder_city_search_result.view.tv_city_name_search_result
-import kotlinx.android.synthetic.main.view_holder_city_search_result.view.tv_city_urban_area_search_result
+import kotlinx.android.synthetic.main.view_holder_city_details_item.view.tv_detail_label
+import kotlinx.android.synthetic.main.view_holder_city_details_item.view.tv_detail_value
+import timber.log.Timber
 
-class SearchCityAdapter(private val context: Context) : Adapter<BaseViewHolder>() {
+class CityDetailsListAdapter(private val context: Context) : Adapter<BaseViewHolder>() {
   
-  private val citiesSearchResultsList = ArrayList<CityItemViewData>()
+  private val cityDetailsList = ArrayList<Pair<String, String>>()
   
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-    val view = LayoutInflater.from(context).inflate(R.layout.view_holder_city_search_result, parent, false)
-    return SearchCityViewHolder(view)
+    val view = LayoutInflater.from(context).inflate(R.layout.view_holder_city_details_item, parent, false)
+    return CityDetailItemViewHolder(view)
   }
   
   override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-    if (holder is SearchCityViewHolder) {
-      val adapterPosition = holder.adapterPosition
-      val cityItemViewData = citiesSearchResultsList[adapterPosition]
+    if (holder is CityDetailItemViewHolder) {
+      val pair = cityDetailsList[holder.adapterPosition]
       with(holder.itemView) {
-        this.setOnClickListener {
-          Navigator.navigationLiveData.postValue(CityDetailsPageShort(cityItemViewData))
-        }
-        tv_city_name_search_result.text = cityItemViewData.getCityName()
-        tv_city_urban_area_search_result.text = cityItemViewData.getUrbanAreaName()
-        tv_city_country_search_result.text = cityItemViewData.getCountryName()
+        tv_detail_label.text = pair.first
+        tv_detail_value.text = pair.second
       }
     }
   }
   
-  override fun getItemCount() = citiesSearchResultsList.size
+  override fun getItemCount() = cityDetailsList.size
   
-  fun updateItems(citiesList: List<CityItemViewData>?) {
+  fun updateItems(citiesList: List<Pair<String, String>>?) {
     if (citiesList != null && citiesList.isNotEmpty()) {
-      citiesSearchResultsList.clear()
-      citiesSearchResultsList.addAll(citiesList)
+      cityDetailsList.clear()
+      cityDetailsList.addAll(citiesList)
       notifyDataSetChanged()
+    } else {
+      Timber.e("Attempting to update adapter with invalid list, please check")
     }
   }
   
   fun clear() {
-    citiesSearchResultsList.clear()
+    cityDetailsList.clear()
     notifyDataSetChanged()
   }
   
 }
 
-class SearchCityViewHolder(view: View) : BaseViewHolder(view)
+class CityDetailItemViewHolder(view: View) : BaseViewHolder(view)
