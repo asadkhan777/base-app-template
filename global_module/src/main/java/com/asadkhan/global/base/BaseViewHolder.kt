@@ -1,7 +1,8 @@
-package com.asadkhan.base_app.adapters
+package com.asadkhan.global.base
 
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
-open class BaseViewHolder<out T>(view: View) {
+open class BaseViewHolder(view: View) : ViewHolder(view) {
   
 }
