@@ -69,3 +69,7 @@ fun initializeRetrofit(): Retrofit {
 val retrofit: Retrofit by lazy { initializeRetrofit() }
 
 val teleportService: TeleportService by lazy { retrofit.create(TeleportService::class.java) }
+
+val cityRepository: MyCityRepository by lazy { MyCityRepository() }
+
+fun getUrlFromID(id: Int) = "https://api.teleport.org/api/cities/geonameid:$id/"

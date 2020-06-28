@@ -69,6 +69,8 @@ open class BaseRepository {
 
 sealed class Result<out T : Any>(val throwable: Throwable? = null) {
   
+  fun getOrNull() = if (this is Success) this.data else null
+  
   data class Success<out T : Any>(val data: T) : Result<T>()
   
   data class Error(
