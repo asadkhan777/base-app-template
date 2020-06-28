@@ -33,11 +33,39 @@ android {
             def varName = variant.name
             print("Assemble Type: $varName\n")
             if (varName == "debug") {
-                variant.assemble.doLast { output ->
-                    print("Copying module artifact\n")
-                    rootProject.archiveArtifact("global_module")
+                variant.assembleProvider.configure {
+                    it.doLast { output ->
+                        print("Copying module artifact\n")
+                        rootProject.archiveArtifact("global_module")
+                    }
                 }
             }
+        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"
+                ]
+            }
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8.toString()
+            targetCompatibility JavaVersion.VERSION_1_8.toString()
+        }
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
+        }
+        lintOptions {
+            abortOnError false
+        }
+        dexOptions {
+            jumboMode true
+            preDexLibraries true
+        }
+        kapt {
+            useBuildCache true
         }
     }
 
@@ -48,7 +76,6 @@ android {
         }
         release {
             minifyEnabled false
-
             consumerProguardFiles rootProguard
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), rootProguard
         }
@@ -67,10 +94,6 @@ android {
         jumboMode true
         preDexLibraries true
     }
-    kapt {
-        generateStubs false
-        useBuildCache true
-    }
 }
 
 allprojects {
@@ -81,20 +104,6 @@ allprojects {
         maven { url "https://maven.google.com" }
     }
 }
-
-
-//configurations {
-//  rootProject.ext.flavors.each { flavor, config ->
-//    print("BuildFlavor: ${flavor}Implementation\n")
-//    print("BuildFlavor: ${flavor}DebugImplementation\n")
-//    print("BuildFlavor: ${flavor}ReleaseImplementation\n")
-//    "$flavor" {
-//      "${flavor}Implementation"
-//      "${flavor}DebugImplementation"
-//      "${flavor}ReleaseImplementation"
-//    }
-//  }
-//}
 
 def nav_version = "2.1.0"
 def rv = "2.5.0"
@@ -115,7 +124,6 @@ def kotlin_jdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 dependencies {
     implementation fileTree(include: ["*.jar"], dir: "libs")
 
-
     api Libs.kotlinStdLib
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5"
 
@@ -124,8 +132,8 @@ dependencies {
     api "androidx.legacy:legacy-support-v4:1.0.0"
     api "androidx.appcompat:appcompat:1.1.0"
     api "androidx.fragment:fragment-ktx:1.3.0-alpha06"
-    api "androidx.navigation:navigation-fragment-ktx:2.2.2"
-    api "androidx.navigation:navigation-ui-ktx:2.2.2"
+    api "androidx.navigation:navigation-fragment-ktx:2.3.0"
+    api "androidx.navigation:navigation-ui-ktx:2.3.0"
     api "androidx.core:core-ktx:1.3.0"
     api "androidx.multidex:multidex:2.0.1"
     api "androidx.recyclerview:recyclerview:1.1.0"
@@ -143,20 +151,19 @@ dependencies {
     //retrofit(Network)
     api "com.squareup.retrofit2:retrofit:2.9.0"
     api "com.squareup.retrofit2:converter-gson:2.9.0"
-    /*Please don't update this, newer version doesn"t support <API 19*/
+    /*Please don't update this, newer version doesn't support <API 19*/
     //noinspection GradleDependency
     api "com.squareup.okhttp3:logging-interceptor:3.10.0"
 
-    debugImplementation "com.github.ChuckerTeam.Chucker:library:3.2.0"
-    releaseImplementation "com.github.ChuckerTeam.Chucker:library-no-op:3.2.0"
+    debugApi "com.github.ChuckerTeam.Chucker:library:3.2.0"
+    releaseApi "com.github.ChuckerTeam.Chucker:library-no-op:3.2.0"
 
-    implementation "com.google.code.gson:gson:2.8.6"
-    implementation "com.google.android.libraries.places:places:2.3.0"
+    api "com.google.code.gson:gson:2.8.6"
+    api "com.google.android.libraries.places:places:2.3.0"
 
     testImplementation "junit:junit:4.12"
     testImplementation "org.mockito:mockito-core:2.19.0"
     testImplementation "org.robolectric:robolectric:3.3.2"
-    testImplementation "org.robolectric:shadows-support-v4:3.3.2"
 
     androidTestImplementation "androidx.test:runner:1.2.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"

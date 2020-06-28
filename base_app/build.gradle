@@ -11,7 +11,7 @@ apply from: "./flavors.gradle"
 android {
   compileSdkVersion Versions.compileSDK
   defaultConfig {
-    applicationId "com.asadkhan.base_app"
+    applicationId "com.asadkhan.keeptruckin.mycities"
 
     minSdkVersion Versions.devSDK
     targetSdkVersion Versions.targetSDK
@@ -21,7 +21,7 @@ android {
     buildToolsVersion Versions.buildTools
 
     defaultPublishConfig "debug"
-    //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
     debug {
@@ -46,10 +46,19 @@ android {
     }
   }
   compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
+    sourceCompatibility JavaVersion.VERSION_1_8.toString()
+    targetCompatibility JavaVersion.VERSION_1_8.toString()
   }
-  buildToolsVersion '29.0.3'
+  kotlinOptions {
+    jvmTarget = JavaVersion.VERSION_1_8.toString()
+  }
+  lintOptions {
+    abortOnError false
+  }
+  dexOptions {
+    jumboMode true
+    preDexLibraries true
+  }
 }
 
 configurations {
@@ -72,22 +81,53 @@ allprojects {
     }
   }
 }
-
 dependencies {
   implementation fileTree(include: ["*.jar"], dir: "libs")
+
+  fullApi project(":global_module")
 
   slimApi fileTree(include: ["*.aar"], dir: "libs")
   // All pre-build aar libs will be found in this dir
   slimApi fileTree(include: ["*.aar"], dir: "cached_libs")
 
-  fullApi project(":global_module")
+  // Dependencies which are used by all modules
+  // These are being pulled from global_module in full mode
+  // Importing explicitly in slim mode since transitive dependencies (TDs) don't work with AARs
+  // Will have to rely on these until we have support for TDs with AAR bundles
+  slimApi Libs.kotlinStdLib
+  slimApi "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5"
 
-  implementation "androidx.appcompat:appcompat:1.1.0"
-  implementation "androidx.constraintlayout:constraintlayout:1.1.3"
+  slimApi "androidx.work:work-runtime:2.3.4"
+  slimApi "androidx.constraintlayout:constraintlayout:1.1.3"
+  slimApi "androidx.legacy:legacy-support-v4:1.0.0"
+  slimApi "androidx.appcompat:appcompat:1.1.0"
+  slimApi "androidx.fragment:fragment-ktx:1.3.0-alpha06"
+  slimApi "androidx.navigation:navigation-fragment-ktx:2.3.0"
+  slimApi "androidx.navigation:navigation-ui-ktx:2.3.0"
+  slimApi "androidx.core:core-ktx:1.3.0"
+  slimApi "androidx.multidex:multidex:2.0.1"
+  slimApi "androidx.recyclerview:recyclerview:1.1.0"
+
+  slimApi "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+  slimApi "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+  slimApi "androidx.lifecycle:lifecycle-common-java8:2.2.0"
+
+  slimApi "com.jakewharton.timber:timber:4.7.1"
+
+  slimApi "com.google.code.gson:gson:2.8.6"
+  slimApi "com.google.android.libraries.places:places:2.3.0"
+
+  // Dependencies only used by app module
+  api 'com.github.quickpermissions:quickpermissions-kotlin:0.4.0'
+
   testImplementation "junit:junit:4.12"
+  testImplementation "org.mockito:mockito-core:2.19.0"
+  testImplementation "org.robolectric:robolectric:3.3.2"
+
   androidTestImplementation "androidx.test:runner:1.2.0"
   androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
 }
+
 
 repositories {
   google()
