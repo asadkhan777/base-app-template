@@ -1,6 +1,7 @@
 package com.asadkhan.global
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Context.CONNECTIVITY_SERVICE
 import android.content.Intent
@@ -12,14 +13,25 @@ import android.os.Build.VERSION_CODES.M
 import android.os.Build.VERSION_CODES.N
 import android.os.Build.VERSION_CODES.O
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
+import androidx.fragment.app.Fragment
+import com.asadkhan.global.database.city.CityDetails
+import com.asadkhan.global.domain.city.view.CityItemViewData
+import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -137,6 +149,39 @@ fun Context?.isWifiAvailable(): Boolean {
   return false
 }
 
+val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
+
+fun Any?.toast(resId: Int, duration: Int = LENGTH_LONG) {
+  val ctx = CityApp.instance
+  val message = ctx.getString(resId)
+  toast(message, duration)
+}
+
+fun Any?.toast(message: String?, duration: Int = LENGTH_LONG) {
+  val ctx = CityApp.instance
+  GlobalScope.launch(Dispatchers.Main) {
+    handler.postAtFrontOfQueue {
+      try {
+        makeText(ctx, message, duration).show()
+      } catch (e: Exception) {
+        e.printStackTrace()
+      }
+    }
+  }
+}
+
+fun Activity?.isActive() = this != null && !isFinishing
+
+fun Fragment.toast(message: String?, duration: Int = LENGTH_LONG) {
+  try {
+    makeText(context, message, duration).show()
+  } catch (e: Exception) {
+    e.printStackTrace()
+  }
+}
+
+fun Fragment.isActive() = this.isAdded && this.context != null && this.view != null
+
 @SuppressLint("MissingPermission")
 fun Context?.networkInfo(): NetworkInfo? {
   val connectivityManager = this?.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -167,6 +212,22 @@ fun View?.hide(gone: Boolean = true): View? {
   return this
 }
 
+fun TextInputLayout.setErrorMessage(errorMessage: String) {
+  error = errorMessage
+  isErrorEnabled = errorMessage.isNotBlank()
+}
+
+fun View.disableDelayedUntilRelapse(delayAmount: Long = 3000) {
+  CoroutineScope(Dispatchers.Main).launch {
+    isEnabled = false
+    delay(delayAmount)
+    try {
+      isEnabled = true
+    } catch (e: Exception) {
+      Timber.e(e)
+    }
+  }
+}
 
 fun String.capitalizeWords(): String = split(" ").joinToString(" ") { it.capitalize() }
 
@@ -202,4 +263,27 @@ inline fun <reified T : Any> T.deflate(): String? {
 inline fun <reified T : Any> T.deepCopy(): T {
   val adapter = gson.getAdapter(T::class.java)
   return adapter.fromJson(gson.toJson(this)) as T
+}
+
+fun CityDetails.getLabelValuePairs(): ArrayList<Pair<String, String>> {
+  val pairs = ArrayList<Pair<String, String>>()
+  return pairs.apply {
+    add("Name" to name)
+    add("Province" to province)
+    add("Country" to country)
+    add("Timezone" to timezone)
+    add("Population" to "$population")
+  }
+}
+
+fun CityItemViewData.getLabelValuePairs(): ArrayList<Pair<String, String>> {
+  val pairs = ArrayList<Pair<String, String>>()
+  return pairs.apply {
+    add("Name" to getCityName())
+    add("Province" to getUrbanAreaName())
+    add("Country" to getCountryName())
+    add("Timezone" to "- - - -")
+    add("Population" to "- - - -")
+  }
+  
 }
