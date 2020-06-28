@@ -1,5 +1,5 @@
 <resources >
-  
+
   <!-- Base application theme. -->
   <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar" >
     <!-- Customize your theme here. -->
@@ -8,13 +8,13 @@
     <item name="colorAccent" >@color/colorAccent</item >
 
     <!-- other styling for app -->
-    <item name="windowActionBar">false</item>
-    <item name="android:windowNoTitle">true</item>
-    <item name="windowNoTitle">true</item>
+    <item name="windowActionBar" >false</item >
+    <item name="android:windowNoTitle" >true</item >
+    <item name="windowNoTitle" >true</item >
 
-    <item name="android:fontFamily">sans-serif-light</item>
+    <item name="android:fontFamily" >sans-serif-light</item >
 
-    <item name="android:actionMenuTextColor">@color/white</item>
+    <item name="android:actionMenuTextColor" >@color/white</item >
   </style >
 
 </resources >

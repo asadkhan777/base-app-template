@@ -51,8 +51,5 @@ class SavedCityAdapter(private val context: Context) : Adapter<BaseViewHolder>()
   
 }
 
-class SavedCityViewHolder(itemView: View) : BaseViewHolder(itemView) {
-
-
-}
+class SavedCityViewHolder(itemView: View) : BaseViewHolder(itemView)
 

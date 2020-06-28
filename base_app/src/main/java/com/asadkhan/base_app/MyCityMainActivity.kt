@@ -30,10 +30,10 @@ class MyCityMainActivity : BaseActivity() {
     
     tv_action_item.setOnClickListener {
       when (val page = navigationLiveData().value) {
-        is SavedCitiesPage    -> navigationLiveData().postValue(SearchCitiesPage())
-        is SearchCitiesPage                                         -> Timber.e("404: No action found ")
-        is CityDetailsPage -> cityViewModel.toggleCityFavouriteValue(page.geoNameID)
-        null                                                        -> Timber.e("Invalid selection")
+        is SavedCitiesPage  -> navigationLiveData().postValue(SearchCitiesPage())
+        is SearchCitiesPage -> Timber.e("404: No action found ")
+        is CityDetailsPage  -> cityViewModel.toggleCityFavouriteValue(page.geoNameID)
+        null                -> Timber.e("Invalid selection")
       }
     }
     
@@ -59,7 +59,7 @@ class MyCityMainActivity : BaseActivity() {
     val bundle = Bundle()
     val previousData = navigationLiveData().previousData
     when (pageEvent) {
-      is SavedCitiesPage    -> {
+      is SavedCitiesPage  -> {
         iv_back_button.hide()
         tv_action_item.show()
         tv_action_item.setText(R.string.search)
@@ -68,7 +68,7 @@ class MyCityMainActivity : BaseActivity() {
           navigator.navigate(R.id.nav_MySavedCitiesFragment, bundle)
         }
       }
-      is SearchCitiesPage                                         -> {
+      is SearchCitiesPage -> {
         iv_back_button.show()
         tv_action_item.hide()
         tv_page_title.setText(R.string.search)
@@ -76,7 +76,7 @@ class MyCityMainActivity : BaseActivity() {
           navigator.navigate(R.id.nav_SearchCitiesFragment, bundle)
         }
       }
-      is CityDetailsPage -> {
+      is CityDetailsPage  -> {
         iv_back_button.show()
         tv_action_item.show()
         tv_page_title.setText(R.string.details)

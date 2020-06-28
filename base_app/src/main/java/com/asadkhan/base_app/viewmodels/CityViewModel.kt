@@ -2,7 +2,6 @@ package com.asadkhan.base_app.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import com.asadkhan.base_app.R
-import com.asadkhan.base_app.R.string
 import com.asadkhan.global.base.BaseViewModel
 import com.asadkhan.global.convertToEntity
 import com.asadkhan.global.database

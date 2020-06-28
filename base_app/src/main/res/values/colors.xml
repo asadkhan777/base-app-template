@@ -5,13 +5,13 @@
   <color name="colorPrimaryDark" >#43628D</color >
   <color name="colorAccent" >#909090</color >
 
-  <color name="transparent">#00000000</color>
-  <color name="white">#FFFFFF</color>
-  <color name="translucent_white">#8bffffff</color>
-  <color name="translucent_grey">#40000000</color>
-  <color name="translucent_dark_grey">#60000000</color>
-  <color name="almost_white">#c7ffffff</color>
-  <color name="black">#000000</color>
+  <color name="transparent" >#00000000</color >
+  <color name="white" >#FFFFFF</color >
+  <color name="translucent_white" >#8bffffff</color >
+  <color name="translucent_grey" >#40000000</color >
+  <color name="translucent_dark_grey" >#60000000</color >
+  <color name="almost_white" >#c7ffffff</color >
+  <color name="black" >#000000</color >
 
   <!--MATERIAL COLORS-->
 

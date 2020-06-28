@@ -27,7 +27,7 @@ class MySavedCitiesFragment : BaseFragment() {
   
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-  
+    
     rv_saved_cities.apply {
       layoutManager = LinearLayoutManager(requireActivity())
       adapter = savedCityAdapter
