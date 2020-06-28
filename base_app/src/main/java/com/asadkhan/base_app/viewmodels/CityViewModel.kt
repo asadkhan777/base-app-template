@@ -1,7 +1,8 @@
-package com.asadkhan.global.viewModels.city
+package com.asadkhan.base_app.viewmodels
 
 import androidx.lifecycle.MutableLiveData
-import com.asadkhan.global.R
+import com.asadkhan.base_app.R
+import com.asadkhan.base_app.R.string
 import com.asadkhan.global.base.BaseViewModel
 import com.asadkhan.global.convertToEntity
 import com.asadkhan.global.database
@@ -15,7 +16,7 @@ import com.asadkhan.global.network.getUrlFromID
 import com.asadkhan.global.toast
 import kotlinx.coroutines.launch
 
-class CityViewModel() : BaseViewModel() {
+class CityViewModel : BaseViewModel() {
   
   private val repository by lazy { cityRepository }
   private val cityDetailsDao by lazy { database.cityDetailsDao() }
@@ -24,6 +25,7 @@ class CityViewModel() : BaseViewModel() {
   val savedCitiesListLiveData = MutableLiveData<List<CityDetails>>()
   val searchResultLiveData = MutableLiveData<List<CityItemViewData>>()
   val cityDetailsLiveData = MutableLiveData<CityDetails>()
+  val citySavedStatusLiveData = MutableLiveData<Boolean>()
   
   
   fun fetchSavedCities() {
@@ -88,19 +90,16 @@ class CityViewModel() : BaseViewModel() {
             // Existing City, update DB Row
             val detailsToUpdate = cityDetails.copy(isFavorite = cachedCityDetails.isFavorite)
             cityDetailsDao.updateCity(detailsToUpdate)
-            cityDetailsLiveData.postValue(detailsToUpdate)
-            Navigator.navigationLiveData.postValue(CityDetailsPageCached(cityDetails))
           } else {
             // New City, add new DB Row
             cityDetailsDao.insertCity(cityDetails)
             cityDetailsLiveData.postValue(cityDetails)
-            Navigator.navigationLiveData.postValue(CityDetailsPageCached(cityDetails))
           }
         }
         is Error   -> {
           if (cityPresent) {
             emptyStateLiveData.postValue(true)
-            toast("Unable to fetch latest data from server. Please try again in some time")
+            toast(R.string.unable_to_fet_latest_data)
           } else {
             sendFetchDetailsResultErrorMessage(cityDetailResults)
           }
@@ -110,7 +109,7 @@ class CityViewModel() : BaseViewModel() {
     }
   }
   
-  fun markCityFavouriteValue(cityGeoNameID: Int, inputValue: Boolean = true) {
+  fun toggleCityFavouriteValue(cityGeoNameID: Int) {
     showProgressBar.postValue(true)
     ioScope.launch {
       val url = getUrlFromID(cityGeoNameID)
@@ -118,6 +117,7 @@ class CityViewModel() : BaseViewModel() {
       
       if (cachedCityDetails != null) {
         // Success! Found the city in local DB
+        val inputValue = !cachedCityDetails.isFavorite
         val detailsToUpdate = cachedCityDetails.copy(isFavorite = inputValue)
         cityDetailsDao.updateCity(detailsToUpdate)
         cityDetailsLiveData.postValue(detailsToUpdate)
@@ -127,17 +127,14 @@ class CityViewModel() : BaseViewModel() {
         when (val cityDetailResults = repository.getCityDetails(url)) {
           is Success -> {
             val detailsData = cityDetailResults.data
+            val inputValue = !detailsData.isFavorite
             val cityDetails = detailsData.convertToEntity(favInput = inputValue)
             // New City, add new DB Row
             cityDetailsDao.insertCity(cityDetails)
             cityDetailsLiveData.postValue(cityDetails)
           }
           is Error   -> {
-            if (inputValue) {
-              toast("Unable to mark city as favourite!")
-            } else {
-              toast("Unable to remove city from favourites!")
-            }
+            toast("Unable to toggle saved status!")
             sendFetchDetailsResultErrorMessage(cityDetailResults)
           }
         }
