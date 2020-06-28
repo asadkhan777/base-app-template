@@ -1,7 +1,17 @@
 package com.asadkhan.base_app
 
-sealed class PageNavigationEvent
+import android.os.Parcelable
+import com.asadkhan.global.now
+import kotlinx.android.parcel.Parcelize
 
-class SavedCitiesPage() : PageNavigationEvent()
-class SearchCitiesPage() : PageNavigationEvent()
-class CityDetailsPage(val geoNameID: Int) : PageNavigationEvent()
+sealed class PageNavigationEvent : Parcelable
+
+@Parcelize
+data class SavedCitiesPage(val timestamp: Long = now()) : PageNavigationEvent()
+
+@Parcelize
+data class SearchCitiesPage(val timestamp: Long = now()) : PageNavigationEvent()
+
+@Parcelize
+data class CityDetailsPage(val geoNameID: Int) : PageNavigationEvent()
+
