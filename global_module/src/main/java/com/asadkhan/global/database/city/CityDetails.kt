@@ -1,10 +1,13 @@
-package com.asadkhan.global.database.entities
+package com.asadkhan.global.database.city
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 
-@Entity(tableName = "city_details")
+@Parcelize
+@Entity(tableName = TABLE_CITY)
 data class CityDetails(
     @PrimaryKey
     @ColumnInfo(name = "geoname_id")
@@ -28,5 +31,6 @@ data class CityDetails(
     @ColumnInfo(name = "urban_area")
     val urbanArea: String, // San Francisco Bay Area
     @ColumnInfo(name = "self_url")
-    val selfUrl: String // https://api.teleport.org/api/cities/geonameid:5391959/
-)
+    val selfUrl: String, // https://api.teleport.org/api/cities/geonameid:5391959/
+    val isFavorite: Boolean
+) : Parcelable
