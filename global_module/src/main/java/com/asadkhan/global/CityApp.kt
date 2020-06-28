@@ -1,17 +1,21 @@
 package com.asadkhan.global
 
 import android.app.Application
+import timber.log.Timber
 
 /**
- * The base application class responsible for exposing Dagger injection
+ * The base application class responsible for exposing global app instance
  * */
-abstract class CityApp : Application() {
+class CityApp : Application() {
   companion object {
     lateinit var instance: CityApp
   }
   
   override fun onCreate() {
-    super.onCreate()
     instance = this
+    super.onCreate()
+    if (BuildConfig.DEBUG) {
+      Timber.plant(Timber.DebugTree())
+    }
   }
 }
