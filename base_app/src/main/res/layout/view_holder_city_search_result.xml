@@ -1,5 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_vh_city_search_result"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_border_grey_400_1dp_transparent_bg"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    tools:ignore="RtlSymmetry" >
 
+  <TextView
+      android:id="@+id/tv_city_name_search_result"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:padding="12dp"
+      android:textAllCaps="true"
+      android:textColor="@color/md_grey_600"
+      android:textSize="24sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0"
+      tools:text="San Francisco" />
+
+  <TextView
+      android:id="@+id/tv_city_urban_area_search_result"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:ellipsize="end"
+      android:paddingStart="12dp"
+      android:paddingBottom="12dp"
+      android:textColor="@color/md_grey_500"
+      android:textSize="16sp"
+      app:layout_constrainedWidth="true"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tv_city_name_search_result"
+      app:layout_constraintWidth_percent="0.5"
+      tools:text="California" />
+
+  <TextView
+      android:id="@+id/tv_city_country_search_result"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:ellipsize="end"
+      android:gravity="end"
+      android:maxEms="20"
+      android:maxLines="1"
+      android:paddingEnd="12dp"
+      android:paddingBottom="12dp"
+      android:textColor="@color/md_grey_500"
+      android:textSize="16sp"
+      app:layout_constrainedWidth="true"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="1"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tv_city_name_search_result"
+      app:layout_constraintWidth_percent="0.4"
+      tools:text="United States of America" />
 </androidx.constraintlayout.widget.ConstraintLayout >

@@ -1,5 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_search_cities"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_grey_50" >
 
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/til_city_search"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="10dp"
+      android:hint="@string/search_cities"
+      android:textColorHint="@color/md_grey_400"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/bt_fetch_current_location"
+      app:layout_constraintStart_toStartOf="@id/gl_start_padding_12"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.04" >
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_city_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+  </com.google.android.material.textfield.TextInputLayout >
+
+  <LinearLayout
+      android:id="@+id/bt_fetch_current_location"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_marginEnd="2dp"
+      android:background="@drawable/rounded_border_primary_1dp"
+      android:clickable="true"
+      android:focusable="true"
+      android:fontFamily="sans-serif-light"
+      android:foreground="?attr/selectableItemBackground"
+      android:gravity="center"
+      android:padding="3dp"
+      app:layout_constraintBottom_toBottomOf="@id/til_city_search"
+      app:layout_constraintEnd_toEndOf="@id/gl_end_padding_12"
+      app:layout_constraintStart_toEndOf="@id/til_city_search"
+      app:layout_constraintTop_toTopOf="@id/til_city_search"
+      app:layout_constraintWidth_percent="0.17" >
+
+    <ImageButton
+        android:id="@+id/iv_current_location"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:src="@drawable/ic_baseline_my_location_24" />
+  </LinearLayout >
+
+  <ProgressBar
+      android:id="@+id/pb_current_location_loading"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:backgroundTint="@color/colorPrimaryLight"
+      android:elevation="4dp"
+      android:foregroundTint="@color/colorPrimaryDark"
+      android:indeterminate="true"
+      android:padding="6dp"
+      android:secondaryProgressTintMode="src_atop"
+      android:visibility="gone"
+      app:layout_constraintBottom_toBottomOf="@id/bt_fetch_current_location"
+      app:layout_constraintEnd_toEndOf="@id/bt_fetch_current_location"
+      app:layout_constraintStart_toStartOf="@id/bt_fetch_current_location"
+      app:layout_constraintTop_toTopOf="@id/bt_fetch_current_location" />
+
+  <Button
+      android:id="@+id/bt_search_submit"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/rounded_border_primary_1dp"
+      android:clickable="true"
+      android:focusable="true"
+      android:fontFamily="sans-serif-light"
+      android:foreground="?attr/selectableItemBackground"
+      android:text="@string/search"
+      android:textAllCaps="false"
+      android:textColor="@color/colorPrimaryLight"
+      android:textSize="18sp"
+      app:layout_constrainedWidth="true"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="@id/gl_end_padding_12"
+      app:layout_constraintStart_toStartOf="@id/gl_start_padding_12"
+      app:layout_constraintTop_toBottomOf="@id/til_city_search"
+      app:layout_constraintVertical_bias="0.05"
+      app:layout_constraintWidth_percent="0.25" />
+
+  <View
+      android:id="@+id/v_divider_start"
+      android:layout_width="0dp"
+      android:layout_height="1dp"
+      android:background="@color/md_grey_400"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/bt_search_submit"
+      app:layout_constraintVertical_bias="0.05" />
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rv_search_results"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:elevation="8dp"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/v_divider_start"
+      app:layout_constraintVertical_bias="0"
+      tools:itemCount="2"
+      tools:listitem="@layout/view_holder_city_search_result" />
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/gl_start_padding_12"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintGuide_begin="12dp"
+      app:layout_constraintStart_toStartOf="parent" />
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/gl_end_padding_12"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintGuide_end="12dp" />
 </androidx.constraintlayout.widget.ConstraintLayout >
