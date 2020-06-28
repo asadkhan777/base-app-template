@@ -72,3 +72,9 @@ gradlew.bat
 
 # Local cached library modules dir
 /base_app/cached_libs/
+
+# Project level metadata
+/reports/**
+/designs/**
+
+/global_module/schemas
