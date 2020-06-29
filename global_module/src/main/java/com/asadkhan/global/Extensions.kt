@@ -98,7 +98,7 @@ fun Any?.zeroPaddedNumber(number: Int): String {
 //fun pokemonTable(): PokemonDao = component().database().pokemonDao()
 val gson: Gson by lazy { GsonBuilder().setPrettyPrinting().setLenient().create() }
 
-fun contex(): Context = CityApp.instance
+fun contex(): Context = BaseApp.app
 
 // Time based
 
@@ -152,13 +152,13 @@ fun Context?.isWifiAvailable(): Boolean {
 val handler: Handler by lazy { Handler(Looper.getMainLooper()) }
 
 fun Any?.toast(resId: Int, duration: Int = LENGTH_LONG) {
-  val ctx = CityApp.instance
+  val ctx = BaseApp.app
   val message = ctx.getString(resId)
   toast(message, duration)
 }
 
 fun Any?.toast(message: String?, duration: Int = LENGTH_LONG) {
-  val ctx = CityApp.instance
+  val ctx = BaseApp.app
   GlobalScope.launch(Dispatchers.Main) {
     handler.postAtFrontOfQueue {
       try {

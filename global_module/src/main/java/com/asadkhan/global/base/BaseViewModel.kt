@@ -1,12 +1,8 @@
 package com.asadkhan.global.base
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.asadkhan.global.CityApp
-import com.asadkhan.global.MyCityDatabase
-import com.asadkhan.global.database
+import com.asadkhan.global.BaseApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
@@ -18,7 +14,7 @@ import kotlin.coroutines.CoroutineContext
 
 
 open class BaseViewModel : ViewModel() {
-  val app by lazy { CityApp.instance }
+  val app by lazy { BaseApp.app }
   
   private val parentJob = Job()
   private val defaultCoroutineContext: CoroutineContext get() = parentJob + Default
