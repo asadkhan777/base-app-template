@@ -1,12 +1,10 @@
-// 1
-
 const val kotlin = "1.3.72"
 
 object Versions {
   
   // Build Config
   const val minSDK = 16
-  const val devSDK = 21
+  const val devSDK = 24 // Link: https://bit.ly/2YwMwkP
   const val compileSDK = 29
   const val targetSDK = 29
   
