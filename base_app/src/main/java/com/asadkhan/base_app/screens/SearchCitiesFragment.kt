@@ -68,9 +68,7 @@ class SearchCitiesFragment : BaseFragment() {
     })
     
     iv_current_location.setOnClickListener {
-      iv_current_location.hide()
-      iv_current_location.disableDelayedUntilRelapse(4000)
-      pb_current_location_loading.show()
+      showCurrentLocationLoading()
       fetchNearbyCitiesByCurrentLocation()
     }
     
@@ -105,15 +103,26 @@ class SearchCitiesFragment : BaseFragment() {
     val cachedLocation = LocationHelper.lastLocationLiveData.value
     if (cachedLocation != null) {
       cityViewModel.fetchNearestCity(cachedLocation.latitude, cachedLocation.longitude)
+      hideCurrentLocationLoading()
     }
     activity.runWithPermissions(ACCESS_COARSE_LOCATION) {
       activity.requestLocationSettings { location ->
-        iv_current_location.show()
-        iv_current_location.isEnabled = true
-        pb_current_location_loading.hide()
+        hideCurrentLocationLoading()
         cityViewModel.fetchNearestCity(location.latitude, location.longitude)
       }
     }
+  }
+  
+  private fun showCurrentLocationLoading() {
+    iv_current_location.hide()
+    iv_current_location.disableDelayedUntilRelapse(4000)
+    pb_current_location_loading.show()
+  }
+  
+  private fun hideCurrentLocationLoading() {
+    pb_current_location_loading?.hide()
+    iv_current_location?.isEnabled = true
+    iv_current_location?.show()
   }
   
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -129,6 +138,7 @@ class SearchCitiesFragment : BaseFragment() {
     if (resultCode == AppCompatActivity.RESULT_OK) {
       fetchNearbyCitiesByCurrentLocation()
     } else {
+      hideCurrentLocationLoading()
       toast("Please give us permission to locate cities near you")
     }
   }
