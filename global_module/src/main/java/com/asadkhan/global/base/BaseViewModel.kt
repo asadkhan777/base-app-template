@@ -36,4 +36,9 @@ open class BaseViewModel : ViewModel() {
   open fun cancelAllJobs() {
     parentJob.cancelChildren(CancellationException("Parent ViewModel (${javaClass.simpleName}) is cleared: $parentJob"))
   }
+  
+  override fun onCleared() {
+    super.onCleared()
+    cancelAllJobs()
+  }
 }
