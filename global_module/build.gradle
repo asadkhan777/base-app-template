@@ -82,20 +82,7 @@ allprojects {
   }
 }
 
-
-//configurations {
-//  rootProject.ext.flavors.each { flavor, config ->
-//    print("BuildFlavor: ${flavor}Implementation\n")
-//    print("BuildFlavor: ${flavor}DebugImplementation\n")
-//    print("BuildFlavor: ${flavor}ReleaseImplementation\n")
-//    "$flavor" {
-//      "${flavor}Implementation"
-//      "${flavor}DebugImplementation"
-//      "${flavor}ReleaseImplementation"
-//    }
-//  }
-//}
-
+def nav_version = "2.1.0"
 def rv = "2.5.0"
 def timber = "com.jakewharton.timber:timber"
 def glide = "com.github.bumptech.glide"
@@ -112,43 +99,51 @@ def crashlytix = "com.crashlytics.sdk.android:crashlytics"
 def kotlin_jdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
 dependencies {
-  implementation fileTree(include: ["*.jar"], dir: "libs")
+    implementation fileTree(include: ["*.jar"], dir: "libs")
 
-  api Libs.kotlinStdLib
+    api Libs.kotlinStdLib
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5"
 
-  // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview
-  implementation group: 'androidx.recyclerview', name: 'recyclerview', version: '1.1.0'
+    api "androidx.work:work-runtime:2.3.4"
+    api "androidx.constraintlayout:constraintlayout:1.1.3"
+    api "androidx.legacy:legacy-support-v4:1.0.0"
+    api "androidx.appcompat:appcompat:1.1.0"
+    api "androidx.fragment:fragment-ktx:1.3.0-alpha06"
+    api "androidx.navigation:navigation-fragment-ktx:2.3.0"
+    api "androidx.navigation:navigation-ui-ktx:2.3.0"
+    api "androidx.core:core-ktx:1.3.0"
+    api "androidx.multidex:multidex:2.0.1"
+    api "androidx.recyclerview:recyclerview:1.1.0"
 
-  // https://mvnrepository.com/artifact/androidx.constraintlayout/constraintlayout
-  implementation group: 'androidx.constraintlayout', name: 'constraintlayout', version: '1.1.3'
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    api "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    api "androidx.lifecycle:lifecycle-common-java8:2.2.0"
 
-  // https://mvnrepository.com/artifact/androidx.viewpager/viewpager
-  implementation group: 'androidx.viewpager', name: 'viewpager', version: '1.0.0'
+    api "androidx.room:room-runtime:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.5"
+    api "androidx.room:room-ktx:2.2.5"
 
-  kapt "$dagger-compiler:2.23.1"
-  api "$dagger:2.23.1"
-  compileOnly "javax.annotation:jsr250-api:1.0"
+    api "com.jakewharton.timber:timber:4.7.1"
 
-  api "$rx2:rxjava:2.2.9"
-  api "$rx2:rxandroid:2.1.1"
+    //retrofit(Network)
+    api "com.squareup.retrofit2:retrofit:2.9.0"
+    api "com.squareup.retrofit2:converter-gson:2.9.0"
+    /*Please don't update this, newer version doesn't support <API 19*/
+    //noinspection GradleDependency
+    api "com.squareup.okhttp3:logging-interceptor:3.10.0"
 
-  api "$lifecycle-extensions:$archx"
-  api "$lifecycle-runtime:$archx"
-  api "$lifecycle-reactivestreams:$archx"
-  kapt "$lifecycle-compiler:$archx"
+    debugApi "com.github.ChuckerTeam.Chucker:library:3.2.0"
+    releaseApi "com.github.ChuckerTeam.Chucker:library-no-op:3.2.0"
 
-  //retrofit(Network)
-  api "$retrofit2:retrofit:$rv"
-  api "$retrofit2:adapter-rxjava2:$rv"
-  api "$retrofit2:converter-gson:$rv"
-  api "com.squareup.okhttp3:logging-interceptor:3.13.1"
+    api "com.google.code.gson:gson:2.8.6"
+    api "com.google.android.libraries.places:places:2.3.0"
 
-  api "$timber:4.7.1"
+    testImplementation "junit:junit:4.12"
+    testImplementation "org.mockito:mockito-core:2.19.0"
+    testImplementation "org.robolectric:robolectric:3.3.2"
 
-  api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5"
+    androidTestImplementation "androidx.test:runner:1.2.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
 
-  testImplementation "junit:junit:4.12"
-  androidTestImplementation "androidx.test:runner:1.2.0"
-  androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
 }
 
