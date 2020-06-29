@@ -101,8 +101,7 @@ val gson: Gson by lazy { GsonBuilder().setPrettyPrinting().setLenient().create()
 fun contex(): Context = BaseApp.app
 
 // Time based
-
-fun Any?.now() = Date().time
+fun now() = System.currentTimeMillis()
 
 //// Profiling
 //
