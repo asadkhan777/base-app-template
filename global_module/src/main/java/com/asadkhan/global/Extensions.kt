@@ -21,8 +21,6 @@ import android.view.View.VISIBLE
 import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.makeText
 import androidx.fragment.app.Fragment
-import com.asadkhan.global.database.city.CityDetails
-import com.asadkhan.global.domain.city.view.CityItemViewData
 import com.google.android.material.textfield.TextInputLayout
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -262,27 +260,4 @@ inline fun <reified T : Any> T.deflate(): String? {
 inline fun <reified T : Any> T.deepCopy(): T {
   val adapter = gson.getAdapter(T::class.java)
   return adapter.fromJson(gson.toJson(this)) as T
-}
-
-fun CityDetails.getLabelValuePairs(): ArrayList<Pair<String, String>> {
-  val pairs = ArrayList<Pair<String, String>>()
-  return pairs.apply {
-    add("Name" to name)
-    add("Province" to province)
-    add("Country" to country)
-    add("Timezone" to timezone)
-    add("Population" to "$population")
-  }
-}
-
-fun CityItemViewData.getLabelValuePairs(): ArrayList<Pair<String, String>> {
-  val pairs = ArrayList<Pair<String, String>>()
-  return pairs.apply {
-    add("Name" to getCityName())
-    add("Province" to getUrbanAreaName())
-    add("Country" to getCountryName())
-    add("Timezone" to "- - - -")
-    add("Population" to "- - - -")
-  }
-  
 }
