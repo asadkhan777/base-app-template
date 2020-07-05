@@ -27,11 +27,11 @@ open class BaseActivity : AppCompatActivity() {
   
   val answerToEverything = Constants.answerToEverything()
   
-  fun getCurrentFragment(containerId: Int): BaseFragment? {
+  fun getCurrentFragment(containerId: Int): BaseViewFragment? {
     val fragment = supportFragmentManager.findFragmentById(containerId)
     val fragmentPresent = fragment != null && fragment.childFragmentManager.fragments.size > 0
     return if (fragment != null && fragmentPresent) {
-      fragment.childFragmentManager.fragments[0] as BaseFragment
+      fragment.childFragmentManager.fragments[0] as BaseViewFragment
     } else {
       null
     }
