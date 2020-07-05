@@ -12,7 +12,7 @@
       android:theme="@style/AppTheme"
       android:name="com.asadkhan.global.BaseApp"
       tools:ignore="GoogleAppIndexingWarning" >
-    <activity android:name=".MainActivity" >
+    <activity android:name=".MyContactsActivity" >
       <intent-filter >
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
