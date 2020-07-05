@@ -2,29 +2,30 @@ package com.asadkhan.global.base
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.asadkhan.global.simpleName
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
 
 open class BaseFragment : Fragment() {
   
-  private val parentJob = Job()
+  private val parentJob = SupervisorJob()
   private val defaultCoroutineContext get() = parentJob + Default
   private val ioCoroutineContext get() = parentJob + IO
   private val mainCoroutineContext get() = parentJob + Main
   
-  protected val defaultScope by lazy { CoroutineScope(defaultCoroutineContext) }
-  protected val ioScope by lazy { CoroutineScope(ioCoroutineContext) }
-  protected val mainScope by lazy { CoroutineScope(mainCoroutineContext) }
+  protected val defaultScope get() = CoroutineScope(defaultCoroutineContext)
+  protected val ioScope get() = CoroutineScope(ioCoroutineContext)
+  protected val mainScope get() = CoroutineScope(mainCoroutineContext)
   
-  val viewModelProvider by lazy { ViewModelProvider(requireActivity()) }
+  val viewModelProvider by lazy { ViewModelProvider(this) }
   
   override fun onStop() {
     super.onStop()
-    parentJob.cancelChildren(CancellationException("Fragment ${javaClass.simpleName} is not longer active"))
+    parentJob.cancelChildren(CancellationException("Fragment ${simpleName()} is not longer active"))
   }
 }

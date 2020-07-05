@@ -3,6 +3,7 @@ package com.asadkhan.global.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.asadkhan.global.BaseApp
+import com.asadkhan.global.simpleName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.IO
@@ -10,27 +11,26 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
 import java.util.concurrent.CancellationException
-import kotlin.coroutines.CoroutineContext
 
 
 open class BaseViewModel : ViewModel() {
   val app by lazy { BaseApp.app }
   
   private val parentJob = Job()
-  private val defaultCoroutineContext: CoroutineContext get() = parentJob + Default
-  private val ioCoroutineContext: CoroutineContext get() = parentJob + IO
-  private val mainCoroutineContext: CoroutineContext get() = parentJob + Main
+  private val defaultCoroutineContext get() = parentJob + Default
+  private val ioCoroutineContext get() = parentJob + IO
+  private val mainCoroutineContext get() = parentJob + Main
   
-  protected val defaultScope = CoroutineScope(defaultCoroutineContext)
-  protected val ioScope = CoroutineScope(ioCoroutineContext)
-  protected val mainScope = CoroutineScope(mainCoroutineContext)
+  protected val defaultScope get() = CoroutineScope(defaultCoroutineContext)
+  protected val ioScope get() = CoroutineScope(ioCoroutineContext)
+  protected val mainScope get() = CoroutineScope(mainCoroutineContext)
   
-  val showProgressBar: MutableLiveData<Boolean> = MutableLiveData()
-  val showMessageInSnackBar: MutableLiveData<String> = MutableLiveData()
-  val emptyStateLiveData: MutableLiveData<Boolean> = MutableLiveData()
+  val showProgressBar = MutableLiveData<Boolean>()
+  val showMessageInSnackBar = MutableLiveData<String>()
+  val emptyStateLiveData = MutableLiveData<Boolean>()
   
   open fun cancelAllJobs() {
-    parentJob.cancelChildren(CancellationException("Parent ViewModel (${javaClass.simpleName}) is cleared: $parentJob"))
+    parentJob.cancelChildren(CancellationException("Parent ViewModel (${simpleName()}) is cleared: $parentJob"))
   }
   
   override fun onCleared() {
