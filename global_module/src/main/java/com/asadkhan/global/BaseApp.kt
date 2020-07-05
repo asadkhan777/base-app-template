@@ -1,6 +1,7 @@
 package com.asadkhan.global
 
 import android.app.Application
+import com.asadkhan.global.BuildConfig.DEBUG
 import timber.log.Timber
 
 /**
@@ -14,7 +15,7 @@ class BaseApp : Application() {
   override fun onCreate() {
     app = this
     super.onCreate()
-    if (BuildConfig.DEBUG) {
+    if (DEBUG) {
       Timber.plant(Timber.DebugTree())
     }
   }
