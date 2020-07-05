@@ -17,26 +17,24 @@
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"
       app:layout_constraintTop_toBottomOf="@id/toolbar"
-      app:layout_constraintVertical_bias="0.0" />
-  <!--  app:navGraph="@navigation/nav_graph_my_cities" -->
+      app:layout_constraintVertical_bias="0.0"
+      app:navGraph="@navigation/nav_graph_my_contacts" />
 
   <androidx.appcompat.widget.Toolbar
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize"
-      android:background="@color/colorPrimary"
-      android:elevation="1dp"
-      app:contentInsetStartWithNavigation="0dp"
+      android:elevation="10dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-      app:theme="@style/ThemeOverlay.AppCompat.Light"
       tools:ignore="UnusedAttribute" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:background="@color/quantum_white_100"
         android:clickable="true"
         android:focusable="true" >
 
@@ -48,7 +46,6 @@
           android:focusable="true"
           android:gravity="center"
           android:text="Groups"
-          android:textColor="#fff"
           android:textSize="22sp"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
@@ -62,7 +59,6 @@
           android:layout_height="match_parent"
           android:gravity="center"
           android:text="Contact"
-          android:textColor="#fff"
           android:textSize="24sp"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
@@ -86,20 +82,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout >
 
-
   </androidx.appcompat.widget.Toolbar >
-
-  <TextView
-      android:id="@+id/tv_hello_world"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/app_name"
-      android:textSize="24sp"
-      android:visibility="gone"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout >
