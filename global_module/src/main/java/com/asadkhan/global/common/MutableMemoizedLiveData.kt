@@ -1,4 +1,4 @@
-package com.asadkhan.global.base
+package com.asadkhan.global.common
 
 import androidx.lifecycle.MutableLiveData
 
