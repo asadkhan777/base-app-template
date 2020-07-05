@@ -30,7 +30,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.*
 
 /**
  * Wraps the passed function with a try catch, handles all errors with generic
