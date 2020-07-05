@@ -11,7 +11,7 @@ apply from: "./flavors.gradle"
 android {
   compileSdkVersion Versions.compileSDK
   defaultConfig {
-    applicationId "com.asadkhan.keeptruckin.mycities"
+    applicationId "com.asadkhan.base_app"
 
     minSdkVersion Versions.devSDK
     targetSdkVersion Versions.targetSDK
