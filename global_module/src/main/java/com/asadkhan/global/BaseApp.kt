@@ -13,8 +13,8 @@ class BaseApp : Application() {
   }
   
   override fun onCreate() {
-    app = this
     super.onCreate()
+    app = this
     if (DEBUG) {
       Timber.plant(Timber.DebugTree())
     }
