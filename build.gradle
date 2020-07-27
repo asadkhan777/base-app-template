@@ -43,13 +43,13 @@ task clean(type: Delete) {
   delete rootProject.buildDir
 }
 
-def archiveArtifact(String modName) {
+def archiveArtifact(String moduleName) {
   def baseSpec = copySpec {}
   copy {
-    from("./${modName}/build/outputs/aar/")
-    include "${modName}-debug.aar"
+    from("./${moduleName}/build/outputs/aar/")
+    include "${moduleName}-debug.aar"
     into("./base_app/cached_libs/")
-    rename "${modName}-debug.aar", "${modName}.aar"
+    rename "${moduleName}-debug.aar", "${moduleName}.aar"
     with baseSpec
   }
 }
